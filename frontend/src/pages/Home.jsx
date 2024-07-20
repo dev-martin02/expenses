@@ -1,0 +1,76 @@
+import ExpenseSection from "../components/expenses/expenseSection";
+import { useEffect, useState } from "react";
+import Transactions from "../components/transactions/transactions";
+import UserSection from "../components/useInfo/userSection";
+import { userStore } from "../store/userStore";
+import { showExpense } from "../api/api";
+
+export default function Home() {
+  const [display, setDisplay] = useState(false);
+  const [displayUserSection, setDisplayUserSection] = useState(false);
+  const {
+    moneyAmountLeft,
+    username,
+    setUsername,
+    setExpenses,
+    setMoneyAmountLeft,
+    expenses,
+  } = userStore();
+
+  function displayState() {
+    setDisplay(!display);
+  }
+
+  function displayUser() {
+    setDisplayUserSection(!displayUserSection);
+  }
+  useEffect(() => {
+    showExpense().then((data) => {
+      setUsername(data.username);
+      setExpenses(data.expenses);
+      setMoneyAmountLeft(data.moneyLeft);
+    });
+  }, []);
+  console.log(expenses);
+
+  // set the width for moneyAmountLeft
+  let newWidth = "w-72";
+  const length = String(moneyAmountLeft).length;
+  if (length > 8) {
+    newWidth = `${length * 20}px`;
+  }
+
+  return (
+    <section className="flex flex-col items-center w-full ">
+      <div className="flex flex-col gap-3 w-11/12">
+        <nav className="flex w-full justify-between">
+          <p>Brand Name</p>
+          <button className="btn btn-xs" onClick={displayUser}>
+            {username}
+          </button>
+        </nav>
+
+        {displayUserSection && (
+          <UserSection setDisplayUserSection={setDisplayUserSection} />
+        )}
+
+        <div
+          className={`border border-black ${newWidth} mx-auto rounded-2xl text-center bg-slate-950`}
+        >
+          <p className="text-5xl m-5 text-white">${moneyAmountLeft}</p>
+        </div>
+
+        <div className="sm:flex sm:justify-center sm:w-full">
+          <ExpenseSection />
+          <Transactions display={display} setDisplay={setDisplay} />
+        </div>
+        <button
+          className="btn bg-black border-black text-white absolute bottom-5 right-4"
+          onClick={displayState}
+        >
+          +
+        </button>
+      </div>
+    </section>
+  );
+}
