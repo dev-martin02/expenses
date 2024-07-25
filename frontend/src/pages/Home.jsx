@@ -25,13 +25,20 @@ export default function Home() {
     setDisplayUserSection(!displayUserSection);
   }
   useEffect(() => {
-    showExpense().then((data) => {
-      setUsername(data.username);
-      setExpenses(data.expenses);
-      setMoneyAmountLeft(data.moneyLeft);
-    });
+    async function fetchData() {
+      const response = await showExpense();
+
+      if (response.username) {
+        setUsername(data.username);
+        setExpenses(data.expenses);
+        setMoneyAmountLeft(data.moneyLeft);
+      } else {
+        console.log("Im sorry");
+      }
+    }
+
+    fetchData();
   }, []);
-  console.log(expenses);
 
   // set the width for moneyAmountLeft
   let newWidth = "w-72";

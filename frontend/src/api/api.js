@@ -49,11 +49,15 @@ export const addUserExpense = async (formContent) => {
 };
 
 export const showExpense = async () => {
-  const response = await fetch(url, {
-    method: "GET",
-    credentials: "include",
-  });
-  const data = await response.json();
-  console.log(data);
-  return data;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
 };
