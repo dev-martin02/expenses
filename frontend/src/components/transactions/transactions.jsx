@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { userStore } from "../../store/userStore";
 import TransactionInputs from "./transactionInputs";
 import { addUserExpense } from "../../api/api";
+import { useWindowWidth } from "../../util/hooks";
 
 export default function Transactions({ display, setDisplay }) {
-  const { addExpense, moneyAmountLeft, setMoneyAmountLeft } = userStore();
+  const {
+    addExpense,
+    moneyAmountLeft,
+    setMoneyAmountLeft,
+    deskMode,
+    setDeskMode,
+  } = userStore();
   const [transactionAmount, setTransactionAmount] = useState("");
   const [inputWidth, setInputWidth] = useState("40px");
 
@@ -64,17 +71,31 @@ export default function Transactions({ display, setDisplay }) {
     addUserExpense(obj);
   };
 
+  // if screen size == desktop size make the display be true and disappear the X button
+  const width = useWindowWidth();
+  useEffect(() => {
+    console.log(width);
+    if (width < 640) {
+      setDeskMode(false);
+    } else {
+      setDisplay(true);
+      setDeskMode(true);
+    }
+  }, [width]);
+  console.log(deskMode);
   return (
     <>
       {display && (
         <section className="flex flex-col mt-3 gap-6 sm:w-96 sm:mt-0 ">
           <header className="w-full flex">
-            <button
-              onClick={() => setDisplay(false)}
-              className={`relative left-1 btn btn-xs`}
-            >
-              X
-            </button>
+            {!deskMode && (
+              <button
+                onClick={() => setDisplay(false)}
+                className={`relative left-1 btn btn-xs`}
+              >
+                X
+              </button>
+            )}
             <span className="mx-auto">New Transaction</span>
           </header>
           <main>

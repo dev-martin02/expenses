@@ -16,4 +16,7 @@ export const userStore = create((set) => ({
   //Add an expense in the Frontend and send a request to the backend
   addExpense: (expense) =>
     set((state) => ({ expenses: [...state.expenses, expense] })),
+
+  deskMode: true,
+  setDeskMode: (state) => set({ deskMode: state }),
 }));

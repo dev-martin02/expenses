@@ -15,7 +15,7 @@ export default function Home() {
     setUsername,
     setExpenses,
     setMoneyAmountLeft,
-    expenses,
+    deskMode,
   } = userStore();
 
   function displayState() {
@@ -50,8 +50,8 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-center w-full">
-      <div className="flex flex-col gap-3 w-11/12">
-        <nav className="flex w-full justify-between p-2">
+      <div className="flex flex-col justify-center items-center gap-3 w-11/12">
+        <nav className="flex w-full justify-between p-2 lg:w-7/12">
           <p>Expenses App</p>
           {username ? (
             <button className="btn btn-xs" onClick={displayUser}>
@@ -78,12 +78,14 @@ export default function Home() {
           <ExpenseSection />
           <Transactions display={display} setDisplay={setDisplay} />
         </div>
-        <button
-          className="btn bg-black border-black text-white absolute bottom-5 right-4"
-          onClick={displayState}
-        >
-          +
-        </button>
+        {!deskMode && (
+          <button
+            className="btn bg-black border-black text-white absolute bottom-5 right-4"
+            onClick={displayState}
+          >
+            +
+          </button>
+        )}
       </div>
     </section>
   );
