@@ -4,6 +4,7 @@ import Transactions from "../components/transactions/transactions";
 import UserSection from "../components/useInfo/userSection";
 import { userStore } from "../store/userStore";
 import { showExpense } from "../api/api";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [display, setDisplay] = useState(false);
@@ -33,7 +34,7 @@ export default function Home() {
         setExpenses(data.expenses);
         setMoneyAmountLeft(data.moneyLeft);
       } else {
-        console.log("Im sorry");
+        console.log("Data would not be save!");
       }
     }
 
@@ -48,13 +49,19 @@ export default function Home() {
   }
 
   return (
-    <section className="flex flex-col items-center w-full ">
+    <section className="flex flex-col items-center w-full">
       <div className="flex flex-col gap-3 w-11/12">
-        <nav className="flex w-full justify-between">
-          <p>Brand Name</p>
-          <button className="btn btn-xs" onClick={displayUser}>
-            {username}
-          </button>
+        <nav className="flex w-full justify-between p-2">
+          <p>Expenses App</p>
+          {username ? (
+            <button className="btn btn-xs" onClick={displayUser}>
+              {username}
+            </button>
+          ) : (
+            <Link className="btn btn-xs" to="login">
+              Login
+            </Link>
+          )}
         </nav>
 
         {displayUserSection && (
@@ -67,7 +74,7 @@ export default function Home() {
           <p className="text-5xl m-5 text-white">${moneyAmountLeft}</p>
         </div>
 
-        <div className="sm:flex sm:justify-center sm:w-full">
+        <div className="sm:flex sm:justify-center sm:w-full sm:gap-2">
           <ExpenseSection />
           <Transactions display={display} setDisplay={setDisplay} />
         </div>

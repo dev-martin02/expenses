@@ -45,7 +45,7 @@ export default function SignUp() {
               />
             </label>
 
-            <button type="submit" className="btn w-20 mx-auto bg-yellow-950">
+            <button type="submit" className="btn w-20 mx-auto">
               Create Account
             </button>
           </form>

@@ -67,7 +67,7 @@ export default function Transactions({ display, setDisplay }) {
   return (
     <>
       {display && (
-        <section className=" flex flex-col gap-6 sm:w-96">
+        <section className="flex flex-col mt-3 gap-6 sm:w-96 sm:mt-0 ">
           <header className="w-full flex">
             <button
               onClick={() => setDisplay(false)}

@@ -4,16 +4,20 @@ const url = "http://localhost:3000";
 //ADD the abort functionality to all of the routers
 
 export const loginUser = async (formContent) => {
-  const response = await fetch(`${url}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(formContent),
-  });
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(`${url}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formContent),
+    });
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 export const createUser = () => {};
@@ -36,16 +40,20 @@ export const logOutUser = async () => {
 
 // Add Expense
 export const addUserExpense = async (formContent) => {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(formContent),
-  });
-  const data = await response.json();
-  console.log(data);
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formContent),
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const showExpense = async () => {
@@ -55,7 +63,6 @@ export const showExpense = async () => {
       credentials: "include",
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error:", error);
