@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "postinstall": "npm rebuild bcrypt"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
