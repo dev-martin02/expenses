@@ -7,7 +7,7 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: "https://main--friendly-bombolone-b19b9a.netlify.app/",
+    origin: "https://main--friendly-bombolone-b19b9a.netlify.app",
     credentials: true,
   })
 );
