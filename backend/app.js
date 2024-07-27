@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 app.use(
   cors({
@@ -17,7 +18,7 @@ app.use(cookieParser());
 
 //database connection
 mongoose
-  .connect("mongodb://localhost:27017/expenses")
+  .connect(process.env.secretUrl)
   .then(() =>
     app.listen("3000", () => console.log("database and server running!"))
   )
@@ -29,8 +30,3 @@ const userRoute = require("./routes/userRoute");
 
 app.use(expenseRoute);
 app.use(userRoute);
-
-// const PORT = 2000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
