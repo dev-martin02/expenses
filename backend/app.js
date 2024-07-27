@@ -25,23 +25,12 @@ app.use((req, res, next) => {
 //database connection
 mongoose
   .connect(process.env.secretUrl)
-  .then(() =>
-    app.listen("3000", () => console.log("database and server running!"))
-  )
   .catch((error) => () => console.log(error));
 
-app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://expenses-frontend-kohl.vercel.app"
-  );
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 //Routes
@@ -50,9 +39,3 @@ const userRoute = require("./routes/userRoute");
 
 app.use(expenseRoute);
 app.use(userRoute);
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
