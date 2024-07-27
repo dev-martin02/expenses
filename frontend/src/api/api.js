@@ -20,8 +20,24 @@ export const loginUser = async (formContent) => {
   }
 };
 
-export const createUser = () => {};
+export const createUser = async (userData) => {
+  const response = await fetch(`${url}/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+    credentials: "include",
+  });
 
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "An error occurred during sign up");
+  }
+
+  return data;
+};
 // Logout user
 export const logOutUser = async () => {
   try {
