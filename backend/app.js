@@ -7,21 +7,14 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: "https://expenses-frontend-kohl.vercel.app",
+    origin: "https://main--friendly-bombolone-b19b9a.netlify.app/",
     credentials: true,
   })
 );
 
 app.use(express.json());
 // Why use cookieParser? ↓
-app.use((req, res, next) => {
-  res.cookie("_vercel_sso_nonce", "someValue", {
-    sameSite: "None",
-    secure: true,
-    httpOnly: true,
-  });
-  next();
-});
+app.use(cookieParser());
 //database connection
 mongoose
   .connect(process.env.secretUrl)
