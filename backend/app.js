@@ -1,34 +1,47 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const app = express();
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
+const app = express();
+
+// CORS configuration
+const allowedOrigins = [
+  'https://friendly-bombolone-b19b9a.netlify.app',
+  'https://main--friendly-bombolone-b19b9a.netlify.app'
+];
+
 app.use(
   cors({
-    origin: "https://main--friendly-bombolone-b19b9a.netlify.app",
+    origin: function(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
 
 app.use(express.json());
-// Why use cookieParser? ↓
 app.use(cookieParser());
-//database connection
+
+// Database connection
 mongoose
   .connect(process.env.secretUrl)
-  .catch((error) => () => console.log(error));
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((error) => console.log('MongoDB connection error:', error));
+
+// Routes
+const expenseRoute = require("./routes/expenseRout");
+const userRoute = require("./routes/userRoute");
+app.use(expenseRoute);
+app.use(userRoute);
 
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-//Routes
-const expenseRoute = require("./routes/expenseRout");
-const userRoute = require("./routes/userRoute");
-
-app.use(expenseRoute);
-app.use(userRoute);
