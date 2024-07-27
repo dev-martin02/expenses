@@ -14,8 +14,14 @@ app.use(
 
 app.use(express.json());
 // Why use cookieParser? ↓
-app.use(cookieParser());
-
+app.use((req, res, next) => {
+  res.cookie("_vercel_sso_nonce", "someValue", {
+    sameSite: "None",
+    secure: true,
+    httpOnly: true,
+  });
+  next();
+});
 //database connection
 mongoose
   .connect(process.env.secretUrl)
