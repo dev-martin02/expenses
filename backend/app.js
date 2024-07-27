@@ -29,19 +29,51 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-// Database connection
-mongoose
-  .connect(process.env.secretUrl)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((error) => console.log('MongoDB connection error:', error));
-
 // Routes
 const expenseRoute = require("./routes/expenseRout");
 const userRoute = require("./routes/userRoute");
-app.use(expenseRoute);
-app.use(userRoute);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Function to connect to the database
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.secretUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 15000, // Timeout after 15s instead of 30s
+    });
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+    process.exit(1); // Exit process with failure
+  }
+};
+
+// Function to start the server
+const startServer = () => {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
+
+// Main function to run the application
+const main = async () => {
+  await connectDB(); // Wait for database connection
+  
+  // Apply routes
+  app.use(expenseRoute);
+  app.use(userRoute);
+  
+  // Start the server
+  startServer();
+};
+
+// Run the main function
+main().catch(err => console.error(err));
+
+// Error handling for unhandled rejections
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.error(err);
+  process.exit(1);
 });
