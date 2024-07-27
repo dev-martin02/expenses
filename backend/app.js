@@ -34,14 +34,26 @@ const expenseRoute = require("./routes/expenseRout");
 const userRoute = require("./routes/userRoute");
 
 // Function to connect to the database
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.secretUrl);
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-    process.exit(1); // Exit process with failure
+const connectDB = async (retries = 5) => {
+  while (retries) {
+    try {
+      await mongoose.connect(process.env.secretUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 15000,
+      });
+      console.log('Connected to MongoDB');
+      return;
+    } catch (error) {
+      console.error('MongoDB connection error:', error.message);
+      retries -= 1;
+      console.log(`Retries left: ${retries}`);
+      // Wait for 5 seconds before retrying
+      await new Promise(res => setTimeout(res, 5000));
+    }
   }
+  console.error('Could not connect to MongoDB. Exiting...');
+  process.exit(1);
 };
 
 // Function to start the server
@@ -54,7 +66,7 @@ const startServer = () => {
 
 // Main function to run the application
 const main = async () => {
-  await connectDB(); // Wait for database connection
+  await connectDB(); // This will now retry up to 5 times
   
   // Apply routes
   app.use(expenseRoute);
@@ -64,8 +76,7 @@ const main = async () => {
   startServer();
 };
 
-// Run the main function
-main().catch(err => console.error(err));
+main().catch(err => console.error(err))
 
 // Error handling for unhandled rejections
 process.on('unhandledRejection', (err) => {
