@@ -7,7 +7,7 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://expenses-frontend-kohl.vercel.app/",
     credentials: true,
   })
 );
