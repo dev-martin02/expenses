@@ -36,11 +36,7 @@ const userRoute = require("./routes/userRoute");
 // Function to connect to the database
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.secretUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 15000, // Timeout after 15s instead of 30s
-    });
+    await mongoose.connect(process.env.secretUrl);
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('MongoDB connection error:', error);
