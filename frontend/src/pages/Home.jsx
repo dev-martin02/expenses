@@ -27,8 +27,7 @@ export default function Home() {
   }
   async function fetchData() {
     const response = await showExpense();
-    console.log(response.moneyLeft);
-    const moneyLeft = Number(response.moneyLeft);
+    const moneyLeft = Number(response.moneyLeft) || 0;
     setUsername(response.username);
     setExpenses(response.expenses);
     setMoneyAmountLeft(moneyLeft);

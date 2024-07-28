@@ -18,7 +18,6 @@ const verifyUserId = (req) => {
 const updateUserMoneyAmount = async (income, amount, userId) => {
   try {
     const userMoney = await userMoneyModel.findOne({ userId });
-    console.log(userMoney);
     const moneyAmount = Number(userMoney.userMoneyAmount);
     const newAmount = Number(amount);
 
@@ -29,8 +28,6 @@ const updateUserMoneyAmount = async (income, amount, userId) => {
     } else {
       updatedAmount = moneyAmount - newAmount;
     }
-    console.log(newAmount);
-
     userMoney.userMoneyAmount = String(updatedAmount);
     await userMoney.save();
   } catch (err) {
