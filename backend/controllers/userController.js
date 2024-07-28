@@ -24,9 +24,12 @@ exports.signUp = async (req, res, next) => {
     });
 
     const token = createToken(newUser._id);
-    //What this line does? ↓
-    res.cookie("jwt", token, { httpOnly: true });
-    console.log(token);
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
     res
       .status(201)
@@ -53,8 +56,11 @@ exports.login = async (req, res, next) => {
     }
 
     const token = await createToken(checkUser._id);
-    res.cookie("jwt", token, { httpOnly: true });
-
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     res.status(201).json({ username: checkUser.username });
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -63,7 +69,12 @@ exports.login = async (req, res, next) => {
 
 //LogOut backend
 exports.logOut = async (req, res, next) => {
-  res.cookie("jwt", "", { httpOnly: true, maxAge: 1, sameSite: "Strict" });
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    secure: true,
+    maxAge: 1,
+    sameSite: "none",
+  });
   console.log("BYE BYE");
   res.status(200).json({ message: "Logged out successfully" });
 };

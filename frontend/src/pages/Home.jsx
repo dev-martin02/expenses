@@ -25,20 +25,20 @@ export default function Home() {
   function displayUser() {
     setDisplayUserSection(!displayUserSection);
   }
+  async function fetchData() {
+    const response = await showExpense();
+    const moneyLeft = Number(response.moneyLeft);
+    setUsername(response.username);
+    setExpenses(response.expenses);
+    setMoneyAmountLeft(moneyLeft);
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      const response = await showExpense();
-
-      if (response.username) {
-        setUsername(response.username);
-        setExpenses(response.expenses);
-        setMoneyAmountLeft(response.moneyLeft);
-      } else {
-        console.log("Data would not be save!");
-      }
+    if (username !== "") {
+      fetchData();
+    } else {
+      console.log("Data would not be save!");
     }
-
-    fetchData();
   }, []);
 
   // set the width for moneyAmountLeft

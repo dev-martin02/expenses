@@ -19,17 +19,19 @@ const updateUserMoneyAmount = async (income, amount, userId) => {
   try {
     const userMoney = await userMoneyModel.findOne({ userId });
     console.log(userMoney);
-    const moneyAmount = userMoney.userMoneyAmount;
+    const moneyAmount = Number(userMoney.userMoneyAmount);
+    const newAmount = Number(amount);
 
     let updatedAmount;
     //increase/decreased money amount
     if (income) {
-      updatedAmount = moneyAmount + amount;
+      updatedAmount = moneyAmount + newAmount;
     } else {
-      updatedAmount = moneyAmount - amount;
+      updatedAmount = moneyAmount - newAmount;
     }
+    console.log(newAmount);
 
-    userMoney.userMoneyAmount = updatedAmount;
+    userMoney.userMoneyAmount = String(updatedAmount);
     await userMoney.save();
   } catch (err) {
     return err.message;

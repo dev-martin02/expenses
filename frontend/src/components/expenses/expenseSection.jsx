@@ -26,9 +26,9 @@ export default function ExpenseSection() {
       </div>
 
       <section className="flex flex-col gap-4">
-        {newArr.map(({ amount, date, expenseName, description, id }) => (
+        {newArr.map(({ amount, date, expenseName, description, _id }) => (
           <ExpenseCard
-            key={id} // Use a unique key, assuming `id` is from MongoDB
+            key={_id}
             amount={amount}
             date={date}
             name={expenseName}

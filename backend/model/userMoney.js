@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const userMoneySchema = new Schema({
   userId: { type: String, ref: "User" },
-  userMoneyAmount: { type: Number, default: 0, required: true },
+  userMoneyAmount: { type: String, default: 0, required: true },
 });
 
 const userMoneyModel = mongoose.model(
