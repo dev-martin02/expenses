@@ -59,7 +59,6 @@ export default function Transactions({ display, setDisplay }) {
     const { income, amount } = obj;
     const amountNumber = Number(amount);
     let newAmount;
-    console.log(income);
     if (income === "expense" || income === "investment") {
       newAmount = moneyAmountLeft - amountNumber;
     } else {
@@ -74,7 +73,6 @@ export default function Transactions({ display, setDisplay }) {
   // if screen size == desktop size make the display be true and disappear the X button
   const width = useWindowWidth();
   useEffect(() => {
-    console.log(width);
     if (width < 640) {
       setDeskMode(false);
     } else {
@@ -82,7 +80,6 @@ export default function Transactions({ display, setDisplay }) {
       setDeskMode(true);
     }
   }, [width]);
-  console.log(deskMode);
   return (
     <>
       {display && (

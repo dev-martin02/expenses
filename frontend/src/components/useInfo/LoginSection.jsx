@@ -2,7 +2,7 @@ import { userStore } from "../../store/userStore";
 import { logOutUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
-export default function UserSection({ setDisplayUserSection }) {
+export default function LoginSection({ setDisplayUserSection }) {
   const { username } = userStore();
   const navigate = useNavigate();
 

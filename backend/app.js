@@ -8,16 +8,18 @@ const app = express();
 
 // CORS configuration
 const allowedOrigins = [
-  'https://friendly-bombolone-b19b9a.netlify.app',
-  'https://main--friendly-bombolone-b19b9a.netlify.app'
+  "https://friendly-bombolone-b19b9a.netlify.app",
+  "https://main--friendly-bombolone-b19b9a.netlify.app",
+  "http://localhost:5173",
 ];
 
 app.use(
   cors({
-    origin: function(origin, callback) {
+    origin: function (origin, callback) {
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
-        var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        const msg =
+          "The CORS policy for this site does not allow access from the specified Origin.";
         return callback(new Error(msg), false);
       }
       return callback(null, true);
@@ -38,21 +40,19 @@ const connectDB = async (retries = 5) => {
   while (retries) {
     try {
       await mongoose.connect(process.env.secretUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         serverSelectionTimeoutMS: 15000,
       });
-      console.log('Connected to MongoDB');
+      console.log("Connected to MongoDB");
       return;
     } catch (error) {
-      console.error('MongoDB connection error:', error.message);
+      console.error("MongoDB connection error:", error.message);
       retries -= 1;
       console.log(`Retries left: ${retries}`);
       // Wait for 5 seconds before retrying
-      await new Promise(res => setTimeout(res, 5000));
+      await new Promise((res) => setTimeout(res, 5000));
     }
   }
-  console.error('Could not connect to MongoDB. Exiting...');
+  console.error("Could not connect to MongoDB. Exiting...");
   process.exit(1);
 };
 
@@ -67,20 +67,20 @@ const startServer = () => {
 // Main function to run the application
 const main = async () => {
   await connectDB(); // This will now retry up to 5 times
-  
+
   // Apply routes
   app.use(expenseRoute);
   app.use(userRoute);
-  
+
   // Start the server
   startServer();
 };
 
-main().catch(err => console.error(err))
+main().catch((err) => console.error(err));
 
 // Error handling for unhandled rejections
-process.on('unhandledRejection', (err) => {
-  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+process.on("unhandledRejection", (err) => {
+  console.log("UNHANDLED REJECTION! 💥 Shutting down...");
   console.error(err);
   process.exit(1);
 });

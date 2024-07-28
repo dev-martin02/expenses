@@ -1,5 +1,6 @@
 //Access the backend
-const url = "https://expenses-1.onrender.com";
+// const url = "https://expenses-1.onrender.com";
+const url = "http://localhost:3000";
 
 //ADD the abort functionality to all of the routers
 
@@ -66,7 +67,7 @@ export const addUserExpense = async (formContent) => {
       body: JSON.stringify(formContent),
     });
     const data = await response.json();
-    console.log(data);
+    return data;
   } catch (error) {
     console.log(error.message);
   }

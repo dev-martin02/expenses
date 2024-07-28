@@ -7,6 +7,5 @@ const { requireAuth } = require("../middleware/authentication");
 
 route.get("/", requireAuth, expensesControllers.showExpense);
 route.post("/", requireAuth, expensesControllers.addExpense);
-// route.post("/moneyAmount", requireAuth, expensesControllers.moneyAmountLeft);
 
 module.exports = route;
