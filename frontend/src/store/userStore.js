@@ -19,4 +19,7 @@ export const userStore = create((set) => ({
 
   deskMode: true,
   setDeskMode: (state) => set({ deskMode: state }),
+
+  loading: false,
+  setLoading: (state) => set({ loading: state }),
 }));

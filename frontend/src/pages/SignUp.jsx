@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createUser } from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ export default function SignUp() {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,6 +41,10 @@ export default function SignUp() {
       setError(err.message);
     }
   };
+
+  if (success) {
+    navigate("/login");
+  }
 
   return (
     <section className="flex justify-center items-center h-screen">

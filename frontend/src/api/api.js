@@ -2,8 +2,6 @@
 const url = "https://expenses-1.onrender.com";
 // const url = "http://localhost:3000";
 
-//ADD the abort functionality to all of the routers
-
 export const loginUser = async (formContent) => {
   try {
     const response = await fetch(`${url}/login`, {
@@ -80,7 +78,6 @@ export const showExpense = async () => {
       credentials: "include",
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error:", error);

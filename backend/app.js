@@ -10,7 +10,7 @@ const app = express();
 const allowedOrigins = [
   "https://friendly-bombolone-b19b9a.netlify.app",
   "https://main--friendly-bombolone-b19b9a.netlify.app",
-  "http://localhost:5174",
+  "http://localhost:5173",
 ];
 
 app.use(

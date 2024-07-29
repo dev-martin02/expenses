@@ -18,6 +18,11 @@ export default function ExpenseSection() {
     setNewArr(reversedExpenses);
   }, [expenses]);
 
+  let idCounter = 0;
+  function uniqueId(name) {
+    idCounter += 1;
+    return `${Date.now}-${idCounter}`;
+  }
   return (
     <main className="sm:w-96">
       <div className="flex w-full justify-between align-middle mb-3">
@@ -28,7 +33,7 @@ export default function ExpenseSection() {
       <section className="flex flex-col gap-4">
         {newArr.map(({ amount, date, expenseName, description, _id }) => (
           <ExpenseCard
-            key={_id}
+            key={uniqueId()}
             amount={amount}
             date={date}
             name={expenseName}

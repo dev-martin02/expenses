@@ -36,8 +36,6 @@ export default function Home() {
   useEffect(() => {
     if (username !== "") {
       fetchData();
-    } else {
-      console.log("Data would not be save!");
     }
   }, []);
 
@@ -50,6 +48,15 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-center w-full">
+      {/* info Banner */}
+      {!username && (
+        <div className="toast toast-start">
+          <div className="alert alert-warning ">
+            <span>No data would be saved, until you log in!</span>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col justify-center items-center gap-3 w-11/12">
         <nav className="flex w-full justify-between p-2 md:w-12/12  xl:w-7/12">
           <p>Expenses App</p>
