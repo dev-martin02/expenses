@@ -1,4 +1,5 @@
 import ExpenseSection from "../components/expenses/expenseSection";
+import websiteLogo from "../assets/websiteLogo.svg";
 import { useEffect, useState } from "react";
 import Transactions from "../components/transactions/transactions";
 import LoginSection from "../components/useInfo/LoginSection";
@@ -70,7 +71,9 @@ export default function Home() {
 
       <div className="flex flex-col justify-center items-center gap-3 w-11/12">
         <nav className="flex w-full justify-between p-2 md:w-12/12 xl:w-7/12">
-          <p>Expenses App</p>
+          <div className="w-8">
+            <img src={websiteLogo} alt="website Logo" />
+          </div>
           {username ? (
             <button className="btn btn-xs" onClick={displayUser}>
               {username}
