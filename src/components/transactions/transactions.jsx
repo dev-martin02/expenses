@@ -70,7 +70,6 @@ export default function Transactions({ display, setDisplay }) {
     setMoneyAmountLeft(newAmount);
   };
 
-  // if screen size == desktop size make the display be true and disappear the X button
   const width = useWindowWidth();
   useEffect(() => {
     if (width < 640) {
@@ -83,7 +82,7 @@ export default function Transactions({ display, setDisplay }) {
   return (
     <>
       {display && (
-        <section className="absolute flex flex-col items-center inset-0 backdrop-blur-sm mt-3 gap-6 sm:relative sm:w-96 sm:mt-0 ">
+        <section className="absolute flex flex-col items-center inset-0 backdrop-blur-sm mt-3 gap-6 sm:relative sm:backdrop-blur-none sm:w-96 sm:mt-0 ">
           <header className="w-full flex">
             {!deskMode && (
               <button

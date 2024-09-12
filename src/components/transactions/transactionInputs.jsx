@@ -102,7 +102,6 @@ export default function TransactionInputs() {
           name="description"
           id="description"
           className="input input-bordered input-xs w-full max-w-xs"
-          required
         />
       </label>
 

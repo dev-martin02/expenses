@@ -36,7 +36,7 @@ export default function Home() {
     setMoneyAmountLeft(moneyLeft);
   }
 
-  const [showAlert, setShowAlert] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     if (username !== "") {
